@@ -1,72 +1,45 @@
-#include <iostream>
-#include <vector>
+#include <bits/stdc++.h>
 using namespace std;
 
 class Solution {
 public:
-    void segregate(vector<int>& nums) {
-        int i = 0;
-        int j = 0;
-
-        while (j < nums.size()) {
-            if ((nums[j] & 1) == 0) {
-                rotate(nums, i, j);
-                i++;
-                j++;
-            }
-            j++;
-        }
-    }
-
-    void rotate(vector<int>& nums, int start, int end) {
-        int temp = nums[end];
-        while (end > start) {
-            nums[end] = nums[end - 1];
-            end--;
-        }
-        nums[start] = temp;
+    bool containsAllCharacters(string &s, int mid) {
+       int low=0;
+       int right=mid;
+       while(right<=s.size()){
+           string t = s.substr(low,mid);
+           if((t.find('1') != string::npos) &&
+               (t.find('2') != string::npos) &&
+               (t.find('3') != string::npos)){
+                   return true;
+               }
+               low++;
+               right++;
+       }
+       return false;
     }
 };
 
 int main() {
     Solution sol;
-
-    vector<int> nums = {1, 2, 3, 4, 5, 6};
-
-    sol.segregate(nums);
-
-    for (int i = 0; i < 6; i++) {
-        cout << nums[i] << " ";
+    int t;
+    cin>>t;
+    while(t--){
+    string s;
+    cin >> s;
+    int low = 0;
+    int high = s.size();
+    int ans = 0;
+    while (low <= high) {
+        int mid = low + (high - low) / 2;
+        if (sol.containsAllCharacters(s, mid)) {
+            ans = mid;
+            high = mid - 1;
+        } else {
+            low = mid + 1;
+        }
+    }
+    cout << ans<<endl;
     }
     return 0;
 }
-
-// #include <iostream>
-// #include <vector>
-// using namespace std;
-
-// int main() {
-   
-
-//     vector<int> nums = {1, 2, 3, 4, 5, 6};
-//     int n=nums.size();
-
-//     for(int i=0;i<n;i++){
-//         if(nums[i]%2==0){
-//             nums.push_back(nums[i]);
-//         }
-//     }
-    
-//     for(int i=0;i<n;i++){
-//         if(nums[i]%2==1){
-//             nums.push_back(nums[i]);
-//         }
-//     }
-    
-
-//     for (int i = n; i < nums.size(); i++) {
-//         cout << nums[i] << " ";
-//     }
-//     return 0;
-// }
-
